@@ -1,39 +1,34 @@
-import java.util.ArrayList;
-import java.util.List;
-
 public class MovieManager {
-    private List<String> movies; // Список фильмов
-    private int limit; // Лимит на количество последних фильмов
+    private String[] movies;
+    private int limit;
 
-    // Конструктор по умолчанию, устанавливающий лимит в 5
     public MovieManager() {
-        this.movies = new ArrayList<>();
-        this.limit = 5;
+        this.limit = 5; // По умолчанию лимит 5
+        this.movies = new String[0]; // Изначально массив пустой
     }
 
-    // Конструктор с параметром для установки лимита
     public MovieManager(int limit) {
-        this.movies = new ArrayList<>();
         this.limit = limit;
+        this.movies = new String[0]; // Изначально массив пустой
     }
 
-    // Метод для добавления нового фильма
     public void addMovie(String movie) {
-        movies.add(movie);
+        String[] newMovies = new String[movies.length + 1];
+        System.arraycopy(movies, 0, newMovies, 0, movies.length);
+        newMovies[newMovies.length - 1] = movie;
+        movies = newMovies;
     }
 
-    // Метод для получения всех фильмов
-    public List<String> findAll() {
-        return new ArrayList<>(movies);
+    public String[] findAll() {
+        return movies;
     }
 
-    // Метод для получения последних добавленных фильмов
-    public List<String> findLast() {
-        int resultLength = Math.min(limit, movies.size());
-        List<String> result = new ArrayList<>(resultLength);
+    public String[] findLast() {
+        int resultLength = Math.min(movies.length, limit);
+        String[] result = new String[resultLength];
 
         for (int i = 0; i < resultLength; i++) {
-            result.add(movies.get(movies.size() - 1 - i));
+            result[i] = movies[movies.length - 1 - i]; // Заполнение в обратном порядке
         }
 
         return result;
